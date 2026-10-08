@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className="bg-neutral-50 text-neutral-900 overflow-x-hidden min-h-screen">
         <ScrollProvider>
           <HeaderMatrix />
-          <main className="relative min-h-screen w-full pt-[80px]">
+          <main className="relative min-h-screen w-full md:pt-[80px]">
             {children}
           </main>
         </ScrollProvider>
