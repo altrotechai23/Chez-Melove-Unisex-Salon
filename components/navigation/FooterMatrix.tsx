@@ -71,11 +71,11 @@ export default function FooterMatrix() {
           <ul className="text-xs font-light space-y-3">
             <li className="flex items-center">
               <Phone className="w-3.5 h-3.5 mr-2.5 text-neutral-600" />
-              <a href="tel:+27210000000" className="hover:text-white transition-colors duration-300">+27 (0) 21 000 0000</a>
+              <a href="tel:+27680678559" className="hover:text-white transition-colors duration-300">+27 68 067 8559</a>
             </li>
             <li className="flex items-center">
               <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjE2IiB4PSIyIiB5PSI0IiByeD0iMiIvPjxwYXRoIGQ9Im0yMiA3LTgtNSA4IDVabTAgMTBsLTgtNSA4IDVaTTIgN2w4IDUtOCA1Wm0wIDEwbDggLTUtOCA1WiIvPjwvc3ZnPg==" className="w-3.5 h-3.5 mr-2.5 text-neutral-600 filter invert-40" alt="" aria-hidden="true" style={{ width: '14px', height: '14px' }} />
-              <a href="mailto:concierge@melove.co.za" className="hover:text-white transition-colors duration-300">concierge@melove.co.za</a>
+              <a href="mailto:chezmelove2020@gmail.com" className="hover:text-white transition-colors duration-300">chezmelove2020@gmail.com</a>
             </li>
             <li className="pt-2">
               <a 
