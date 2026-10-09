@@ -7,7 +7,7 @@ export default function WhatsAppButton() {
   const buttonRef = useRef<HTMLAnchorElement>(null);
 
   // Pre-configured conversion click text mapping to target local unisex appointments
-  const phoneNumber = "27210000000"; // Replace with salon's primary registered WhatsApp business node
+  const phoneNumber = "27680678559"; // Replace with salon's primary registered WhatsApp business node
   const textMessage = encodeURIComponent(
     "Hello Chez Melove. I would like to inquire about booking an premium session at your Cape Town unisex salon."
   );

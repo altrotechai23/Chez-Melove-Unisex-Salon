@@ -13,14 +13,13 @@ interface NavItem {
 }
 
 const NAVIGATION_ITEMS: NavItem[] = [
-  { label: "Services", href: "#services", seoContext: "Premium Hair & Aesthetic Treatments", icon: Scissors },
+  { label: "Services", href: "/services", seoContext: "Premium Hair & Aesthetic Treatments", icon: Scissors },
   { label: "Our Story", href: "#story", seoContext: "About Chez Melove Salon", icon: Sparkles },
-  { label: "Gallery", href: "#gallery", seoContext: "Editorial Lookbook", icon: Image },
-  { label: "Contact", href: "#contact", seoContext: "Find Us in Cape Town", icon: PhoneCall },
+  { label: "Gallery", href: "/gallery", seoContext: "Editorial Lookbook", icon: Image },
+  { label: "Contact", href: "/contact", seoContext: "Find Us in Cape Town", icon: PhoneCall },
 ];
 
 export default function HeaderMatrix() {
-  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
