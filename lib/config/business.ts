@@ -1,68 +1,45 @@
+// lib/config/business.ts
+
 export const businessConfig = {
-  name: "CHEZ MELOVE",
-  legalName: "CHEZ MELOVE",
-
-  copyrightYear: 2026,
-
-  description:
-    "Premium beauty and hair services in the heart of Long Street, Cape Town.",
+  name: "MELOVE",
 
   address: {
     street: "128 Long Street",
-    area: "Cape Town City Centre",
-    city: "Cape Town",
+    city: "Cape Town City Centre",
     province: "Western Cape",
     country: "South Africa",
-    postalCode: "",
   },
 
-  contact: {
-    phone: "",
-    whatsapp: "",
-    email: "",
-  },
+  // Add these when the real business details are confirmed.
+  phone: "+277777777",
+  whatsapp: "+277777777",
+  email: "melove@gmail.com",
 
   social: {
     tiktok: "https://www.tiktok.com/@chezmelove12",
-    instagram: "",
-    facebook: "",
+    googleBusinessProfile:
+      "https://share.google/hOY2Y5kNhJ9hRIkOY",
   },
 
-  googleBusinessProfile:
-    "https://share.google/hOY2Y5kNhJ9hRIkOY",
-
-  booking: {
-    url: "",
-  },
-
-  hours: [],
-
-  navigation: [
-    {
-      label: "Home",
-      href: "/",
-    },
-    {
-      label: "Services",
-      href: "/services",
-    },
-    {
-      label: "About",
-      href: "/about",
-    },
-    {
-      label: "Gallery",
-      href: "/gallery",
-    },
-    {
-      label: "Find Us",
-      href: "/find-us",
-    },
-    {
-      label: "Contact",
-      href: "/contact",
-    },
-  ],
+  copyrightYear: 2026,
 } as const;
 
-export type BusinessConfig = typeof businessConfig;
+/**
+ * Creates a WhatsApp click-to-chat URL.
+ *
+ * Leave businessConfig.whatsapp empty until the
+ * real MELOVE WhatsApp number is confirmed.
+ */
+export function getWhatsAppHref(message?: string): string | null {
+  const number = businessConfig.whatsapp.replace(/\D/g, "");
+
+  if (!number) {
+    return null;
+  }
+
+  const encodedMessage = encodeURIComponent(
+    message ?? "Hi MELOVE, I'd like to book an appointment."
+  );
+
+  return `https://wa.me/${number}?text=${encodedMessage}`;
+}

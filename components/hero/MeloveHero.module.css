@@ -1,0 +1,570 @@
+.hero {
+  position: relative;
+  height: 620svh;
+  width: 100%;
+  background: #15120f;
+  color: #f8f4ed;
+  overflow: clip;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.shell {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #15120f;
+  transform-origin: center center;
+  will-change: transform, border-radius;
+}
+
+/* ---------------------------------
+   BACKGROUND
+--------------------------------- */
+
+.background {
+  position: absolute;
+  inset: -2%;
+  width: 104%;
+  height: 104%;
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateZ(0);
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.mediaElement {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/*
+ * Keeps the visual cinematic without
+ * making the text difficult to read.
+ */
+.imageTint {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10, 8, 7, 0.32) 0%,
+      rgba(10, 8, 7, 0.04) 34%,
+      rgba(10, 8, 7, 0.16) 58%,
+      rgba(10, 8, 7, 0.66) 100%
+    );
+  pointer-events: none;
+}
+
+.imageGradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 50% 42%,
+      rgba(0, 0, 0, 0) 15%,
+      rgba(0, 0, 0, 0.18) 100%
+    );
+  pointer-events: none;
+}
+
+/* ---------------------------------
+   NAVIGATION
+--------------------------------- */
+
+.nav {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 24px 28px;
+}
+
+.logo {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.location {
+  font-size: 0.63rem;
+  letter-spacing: 0.2em;
+  opacity: 0.75;
+}
+
+.navBook {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+  padding: 0 17px;
+
+  color: #17130f;
+  background: #f7f1e8;
+
+  text-decoration: none;
+
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+.navBook:hover {
+  transform: translateY(-2px);
+  background: #fff;
+}
+
+/* ---------------------------------
+   HERO COPY
+--------------------------------- */
+
+.content {
+  position: absolute;
+  z-index: 10;
+
+  left: clamp(24px, 7vw, 110px);
+  bottom: clamp(150px, 17vh, 190px);
+
+  max-width: 800px;
+
+  pointer-events: none;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 24px;
+
+  font-size: 0.61rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+
+  opacity: 0.82;
+}
+
+.eyebrow span:first-child {
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.content h1 {
+  margin: 0;
+
+  max-width: 800px;
+
+  font-size: clamp(
+    3.2rem,
+    7.4vw,
+    8rem
+  );
+
+  line-height: 0.88;
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  text-wrap: balance;
+}
+
+.content h1 em {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.055em;
+}
+
+.description {
+  margin: 28px 0 0;
+
+  font-size: clamp(
+    0.85rem,
+    1.2vw,
+    1rem
+  );
+
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ---------------------------------
+   BOOKING
+--------------------------------- */
+
+.booking {
+  position: absolute;
+  z-index: 20;
+
+  right: clamp(24px, 7vw, 110px);
+  bottom: clamp(150px, 17vh, 190px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  transform-origin: right bottom;
+}
+
+.primaryButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 36px;
+
+  min-width: 235px;
+  min-height: 58px;
+
+  padding: 0 16px 0 21px;
+
+  color: #15120f;
+  background: #f8f2e9;
+
+  text-decoration: none;
+
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+.primaryButton:hover {
+  transform: translateY(-3px);
+  background: #fff;
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
+  background: #15120f;
+  color: #fff;
+
+  font-size: 1rem;
+}
+
+.secondaryButton,
+.secondaryButtonDisabled {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 44px;
+
+  color: #fff;
+  background: rgba(255, 255, 255, 0.09);
+
+  border: 1px solid rgba(255, 255, 255, 0.22);
+
+  backdrop-filter: blur(12px);
+
+  text-decoration: none;
+
+  font-size: 0.61rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.secondaryButton {
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.secondaryButton:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+.secondaryButtonDisabled {
+  opacity: 0.55;
+}
+
+/* ---------------------------------
+   ADDRESS
+--------------------------------- */
+
+.address {
+  position: absolute;
+  z-index: 20;
+
+  left: clamp(24px, 7vw, 110px);
+  bottom: 32px;
+
+  display: flex;
+  gap: 12px;
+
+  font-size: 0.57rem;
+  letter-spacing: 0.16em;
+
+  color: rgba(255, 255, 255, 0.64);
+}
+
+/* ---------------------------------
+   SLIDESHOW COUNTER
+--------------------------------- */
+
+.progress {
+  position: absolute;
+  z-index: 20;
+
+  right: 28px;
+  top: 50%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  transform: translateY(-50%);
+}
+
+.progress > span {
+  display: block;
+
+  width: 30px;
+  height: 1px;
+
+  background: rgba(255, 255, 255, 0.75);
+
+  transform-origin: left center;
+}
+
+.progress i {
+  position: absolute;
+  right: 38px;
+
+  display: none;
+
+  font-style: normal;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+}
+
+/* ---------------------------------
+   SCROLL
+--------------------------------- */
+
+.scrollHint {
+  position: absolute;
+  z-index: 20;
+
+  right: 50%;
+  bottom: 29px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  transform: translateX(50%);
+
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+
+  opacity: 0.72;
+}
+
+.scrollLine {
+  width: 38px;
+  height: 1px;
+  background: currentColor;
+}
+
+/* ---------------------------------
+   TABLET
+--------------------------------- */
+
+@media (max-width: 900px) {
+  .hero {
+    height: 560svh;
+  }
+
+  .content {
+    left: 24px;
+    right: 24px;
+    bottom: 180px;
+  }
+
+  .content h1 {
+    font-size: clamp(3.1rem, 11vw, 6rem);
+  }
+
+  .booking {
+    left: 24px;
+    right: 24px;
+    bottom: 70px;
+  }
+
+  .primaryButton {
+    width: min(100%, 360px);
+  }
+
+  .address {
+    display: none;
+  }
+}
+
+/* ---------------------------------
+   MOBILE
+--------------------------------- */
+
+@media (max-width: 640px) {
+  .hero {
+    height: 520svh;
+  }
+
+  .stage {
+    height: 100svh;
+  }
+
+  .nav {
+    padding: 20px 18px;
+  }
+
+  .location {
+    display: none;
+  }
+
+  .navBook {
+    min-height: 38px;
+    padding: 0 13px;
+    font-size: 0.58rem;
+  }
+
+  .content {
+    left: 18px;
+    right: 18px;
+    bottom: 205px;
+  }
+
+  .eyebrow {
+    margin-bottom: 18px;
+    font-size: 0.53rem;
+  }
+
+  .content h1 {
+    font-size: clamp(
+      3.05rem,
+      15vw,
+      5rem
+    );
+
+    line-height: 0.87;
+  }
+
+  .description {
+    margin-top: 20px;
+    font-size: 0.8rem;
+  }
+
+  .booking {
+    left: 18px;
+    right: 18px;
+    bottom: 76px;
+  }
+
+  .primaryButton {
+    width: 100%;
+    min-height: 56px;
+  }
+
+  .secondaryButton,
+  .secondaryButtonDisabled {
+    min-height: 40px;
+  }
+
+  .progress {
+    right: 15px;
+    top: 46%;
+    gap: 6px;
+  }
+
+  .progress > span {
+    width: 18px;
+  }
+
+  .scrollHint {
+    display: none;
+  }
+}
+
+/* ---------------------------------
+   REDUCED MOTION
+--------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero {
+    height: 100svh;
+  }
+
+  .stage {
+    position: relative;
+  }
+
+  .slide {
+    display: none;
+  }
+
+  .slide:first-child {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mediaElement {
+    transform: none !important;
+  }
+}

@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState, useRef, useMemo, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 
 interface ServiceItem {
   id: string;
+  slug: string;
   title: string;
   category: "hair" | "aesthetics" | "wellness";
   duration: string;
@@ -17,257 +19,405 @@ interface ServiceItem {
 const SERVICES_DATA: ServiceItem[] = [
   {
     id: "h1",
+    slug: "editorial-cut-style",
     title: "Editorial Precision Cut & Style",
     category: "hair",
     duration: "60 min",
     price: "R 650 - R 950",
-    description: "High-end bespoke structural cutting tailored to individual texture and identity, including a luxury scalp massage and premium blowout finish.",
-    benefits: ["Bespoke mapping", "Premium styling", "Scalp detox therapy"],
-    imageUrl: "https://unsplash.com"
+    description:
+      "High-end bespoke structural cutting tailored to individual texture and identity, including a luxury scalp massage and premium blowout finish.",
+    benefits: [
+      "Bespoke mapping",
+      "Premium styling",
+      "Scalp detox therapy",
+    ],
+    imageUrl: "/images/chezmelove/hair-men.jpeg",
   },
   {
     id: "h2",
+    slug: "signature-balayage-dimensional-tone",
     title: "Signature Balayage & Dimensional Tone",
     category: "hair",
     duration: "180 min",
     price: "R 1,800 - R 2,600",
-    description: "Hand-painted, fluid color gradients that grow out gracefully. Customized processing to preserve hair strand health and structure.",
-    benefits: ["Olaplex bond shield", "Custom tone calibration", "UV defense glaze"],
-    imageUrl: "https://unsplash.com"
+    description:
+      "Hand-painted, fluid color gradients that grow out gracefully. Customized processing to preserve hair strand health and structure.",
+    benefits: [
+      "Olaplex bond shield",
+      "Custom tone calibration",
+      "UV defense glaze",
+    ],
+    imageUrl:
+      "https://images.unsplash.com/photo-1560869713-7d0a29430803?auto=format&fit=crop&w=1200&q=85",
   },
   {
     id: "a1",
+    slug: "advanced-microneedling-collagen-therapy",
     title: "Advanced Micro-Needling Collagen Therapy",
     category: "aesthetics",
     duration: "75 min",
     price: "R 1,400",
-    description: "Medical-grade precision dermal remodeling to smooth out fine lines, correct hyperpigmentation, and naturally trigger cell renewal.",
-    benefits: ["Hyaluronic moisture pack", "Zero recovery peeling", "Cellular rejuvenation"],
-    imageUrl: "https://unsplash.com"
+    description:
+      "Precision-focused skin rejuvenation designed to improve the appearance of fine lines, uneven tone, and skin texture.",
+    benefits: [
+      "Personalized skin consultation",
+      "Targeted skin treatment",
+      "Post-treatment care guidance",
+    ],
+    imageUrl:
+      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1200&q=85",
   },
   {
     id: "a2",
+    slug: "hydro-infusion-deep-pore-resurfacing",
     title: "Hydro-Infusion Deep Pore Resurfacing",
     category: "aesthetics",
     duration: "45 min",
     price: "R 850",
-    description: "Multistep vortex extraction and custom serum infusion targeting urban environmental stressors specific to Cape Town coastal humidity.",
-    benefits: ["Instant cellular glow", "Deep blackhead removal", "Antioxidant seal"],
-    imageUrl: "https://unsplash.com"
+    description:
+      "A refreshing facial treatment combining deep cleansing and targeted serum application for a smoother, revitalized-looking complexion.",
+    benefits: [
+      "Deep pore cleansing",
+      "Hydration boost",
+      "Antioxidant skincare",
+    ],
+    imageUrl:
+      "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=1200&q=85",
   },
   {
     id: "w1",
+    slug: "aromatherapy-stress-release",
     title: "Aromatherapy Stress Release",
     category: "wellness",
     duration: "90 min",
     price: "R 1,100",
-    description: "Deep tissue physical tension resetting using targeted essential oil infusions designed to mitigate executive burnout stressors.",
-    benefits: ["Lymphatic system flush", "Hot basalt stone finish", "Mindfulness focus"],
-    imageUrl: "https://unsplash.com"
+    description:
+      "A restorative relaxation experience combining massage techniques and aromatic oils to help ease everyday tension.",
+    benefits: [
+      "Relaxing massage experience",
+      "Aromatic oil selection",
+      "Restorative atmosphere",
+    ],
+    imageUrl:
+      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=85",
   },
   {
     id: "w2",
+    slug: "detoxifying-scalp-spa-blowout",
     title: "Detoxifying Scalp Spa & Blowout Combination",
     category: "hair",
     duration: "75 min",
     price: "R 750",
-    description: "Micro-circulation hair root exfoliation treatment paired with deep structural conditioning to counter mineral hard-water exposure.",
-    benefits: ["Follicle clear scaling", "Aromatheraputic rinse", "High-gloss editorial finish"],
-    imageUrl: "https://unsplash.com"
-  }
+    description:
+      "A scalp-care experience paired with deep conditioning and a polished blowout for refreshed roots and a glossy finish.",
+    benefits: [
+      "Scalp exfoliation",
+      "Conditioning treatment",
+      "High-gloss styling finish",
+    ],
+    imageUrl:
+      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85",
+  },
 ];
 
 const CATEGORIES = [
   { slug: "all", label: "All Treatments" },
   { slug: "hair", label: "Hair Crafting" },
   { slug: "aesthetics", label: "Modern Aesthetics" },
-  { slug: "wellness", label: "Luxury Wellness" }
+  { slug: "wellness", label: "Luxury Wellness" },
 ] as const;
 
+type Category = (typeof CATEGORIES)[number]["slug"];
+
 export default function ServiceDiscovery() {
-  const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [visibleServices, setVisibleServices] = useState<ServiceItem[]>(SERVICES_DATA);
+  const [activeCategory, setActiveCategory] = useState<Category>("all");
+  const [visibleServices, setVisibleServices] =
+    useState<ServiceItem[]>(SERVICES_DATA);
+
   const gridRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<gsap.core.Timeline | null>(null);
+  const activeCategoryRef = useRef<Category>("all");
 
-  const handleCategoryChange = (category: string) => {
-    if (category === activeCategory) return;
+  const handleCategoryChange = useCallback(
+    (category: Category) => {
+      if (category === activeCategoryRef.current) return;
 
-    const cards = gridRef.current?.querySelectorAll(".service-card");
-    if (!cards || cards.length === 0) {
+      activeCategoryRef.current = category;
       setActiveCategory(category);
-      return;
-    }
 
-    gsap.to(cards, {
-      opacity: 0,
-      y: 15,
-      scale: 0.97,
-      duration: 0.3,
-      stagger: 0.04,
-      ease: "power2.in",
-      onComplete: () => {
-        setActiveCategory(category);
-        const nextServices = category === "all" 
-          ? SERVICES_DATA 
-          : SERVICES_DATA.filter((item) => item.category === category);
-        setVisibleServices(nextServices);
+      // Stop any unfinished filter animation.
+      animationRef.current?.kill();
+
+      const grid = gridRef.current;
+
+      if (!grid) {
+        setVisibleServices(
+          category === "all"
+            ? SERVICES_DATA
+            : SERVICES_DATA.filter(
+                (service) => service.category === category,
+              ),
+        );
+        return;
       }
-    });
-  };
+
+      const cards = grid.querySelectorAll<HTMLElement>(".service-card");
+
+      if (cards.length === 0) {
+        setVisibleServices(
+          category === "all"
+            ? SERVICES_DATA
+            : SERVICES_DATA.filter(
+                (service) => service.category === category,
+              ),
+        );
+        return;
+      }
+
+      animationRef.current = gsap.timeline({
+        onComplete: () => {
+          setVisibleServices(
+            category === "all"
+              ? SERVICES_DATA
+              : SERVICES_DATA.filter(
+                  (service) => service.category === category,
+                ),
+          );
+        },
+      });
+
+      animationRef.current.to(cards, {
+        opacity: 0,
+        y: 15,
+        scale: 0.98,
+        duration: 0.25,
+        stagger: 0.035,
+        ease: "power2.in",
+      });
+    },
+    [],
+  );
 
   useEffect(() => {
-    const cards = gridRef.current?.querySelectorAll(".service-card");
-    if (!cards || cards.length === 0) return;
+    const grid = gridRef.current;
 
-    gsap.fromTo(
-      cards,
-      { opacity: 0, y: 30, scale: 0.95 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.6,
-        stagger: 0.06,
-        ease: "power4.out",
-        clearProps: "all"
-      }
-    );
+    if (!grid) return;
+
+    const cards = grid.querySelectorAll<HTMLElement>(".service-card");
+
+    if (cards.length === 0) return;
+
+    const context = gsap.context(() => {
+      gsap.fromTo(
+        cards,
+        {
+          opacity: 0,
+          y: 24,
+          scale: 0.98,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.5,
+          stagger: 0.06,
+          ease: "power3.out",
+          clearProps: "transform",
+        },
+      );
+    }, grid);
+
+    return () => {
+      context.revert();
+      animationRef.current?.kill();
+      animationRef.current = null;
+    };
   }, [visibleServices]);
 
   return (
-    <section 
-      id="services" 
-      className="bg-neutral-50 text-neutral-900 py-24 px-6 md:px-12 w-full border-b border-neutral-200 scroll-mt-16"
+    <section
+      id="services"
+      className="w-full scroll-mt-16 border-b border-neutral-200 bg-neutral-50 px-5 py-20 text-neutral-900 sm:px-8 md:px-12 md:py-24"
       aria-labelledby="services-title"
     >
-      <div className="max-w-7xl mx-auto">
-        
-        <div className="max-w-xl mb-12">
-          <span className="text-[10px] uppercase tracking-[0.4em] text-neutral-400 font-bold block mb-3">
+      <div className="mx-auto max-w-7xl">
+        <header className="mb-10 max-w-xl md:mb-12">
+          <span className="mb-3 block text-[10px] font-bold uppercase tracking-[0.4em] text-neutral-400">
             01 / Core Capabilities
           </span>
-          <h2 
+
+          <h2
             id="services-title"
-            className="text-3xl md:text-5xl font-light tracking-tight text-neutral-900 leading-tight"
+            className="text-3xl font-light leading-tight tracking-tight text-neutral-900 md:text-5xl"
           >
             The Menu Matrix.
           </h2>
-        </div>
 
-        {/* Horizontal Navigation Tab Rail */}
-        <div className="w-full border-b border-neutral-200/80 mb-16 relative">
-          <div 
-            className="flex items-center space-x-12 overflow-x-auto pb-4 scrollbar-none snap-x snap-mandatory touch-pan-x"
+          <p className="mt-4 max-w-md text-sm font-light leading-relaxed text-neutral-500">
+            Discover considered treatments, refined techniques, and
+            personalized experiences designed around you.
+          </p>
+        </header>
+
+        {/* Horizontally scrollable category filters */}
+        <div className="relative mb-12 border-b border-neutral-200/80 md:mb-16">
+          <div
+            className="flex snap-x snap-mandatory items-center gap-8 overflow-x-auto pb-4 sm:gap-12"
             role="tablist"
-            aria-label="Treatment Category Filter Rail"
-            style={{ WebkitOverflowScrolling: "touch", msOverflowStyle: "none", scrollbarWidth: "none" }}
+            aria-label="Treatment categories"
+            style={{
+              WebkitOverflowScrolling: "touch",
+              scrollbarWidth: "none",
+            }}
           >
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat.slug}
-                role="tab"
-                aria-selected={activeCategory === cat.slug}
-                onClick={() => handleCategoryChange(cat.slug)}
-                className={`text-xs uppercase tracking-[0.25em] font-medium py-2 transition-all duration-300 relative focus:outline-none flex-shrink-0 snap-start whitespace-nowrap cursor-pointer ${
-                  activeCategory === cat.slug 
-                    ? "text-neutral-950 font-bold" 
-                    : "text-neutral-400 hover:text-neutral-700"
-                }`}
-              >
-                {cat.label}
-                {activeCategory === cat.slug && (
-                  <span className="absolute bottom-[-17px] left-0 w-full h-[2px] bg-neutral-950 z-10" />
-                )}
-              </button>
-            ))}
+            {CATEGORIES.map((category) => {
+              const isActive = activeCategory === category.slug;
+
+              return (
+                <button
+                  key={category.slug}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls="service-results"
+                  onClick={() => handleCategoryChange(category.slug)}
+                  className={`relative flex-shrink-0 snap-start whitespace-nowrap py-2 text-[10px] font-medium uppercase tracking-[0.2em] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-4 sm:text-xs ${
+                    isActive
+                      ? "font-bold text-neutral-950"
+                      : "text-neutral-400 hover:text-neutral-700"
+                  }`}
+                >
+                  {category.label}
+
+                  {isActive && (
+                    <span className="absolute -bottom-[17px] left-0 z-10 h-[2px] w-full bg-neutral-950" />
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Dynamic Service Grid Workspace */}
-        <div 
+        {/* Service cards */}
+        <div
+          id="service-results"
           ref={gridRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[500px]"
+          role="tabpanel"
+          className="grid min-h-[500px] grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3"
         >
           {visibleServices.map((service) => (
-            <article 
+            <Link
               key={service.id}
-              className="service-card bg-white border border-neutral-200/80 flex flex-col justify-between hover:border-neutral-900 transition-colors duration-500 group shadow-sm will-change-transform overflow-hidden"
+              href={`/services/${service.slug}`}
+              aria-label={`View details for ${service.title}`}
+              className="service-card group flex flex-col overflow-hidden border border-neutral-200/80 bg-white shadow-sm transition-colors duration-500 hover:border-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-4"
             >
-              <div>
-                {/* Immersive Editorial Image Mask Container */}
-                <div className="w-full aspect-[16/10] overflow-hidden bg-neutral-100 relative">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img 
-                    src={service.imageUrl} 
-                    alt={service.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter grayscale hover:grayscale-0 transition-all duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="text-[9px] uppercase tracking-[0.25em] bg-neutral-950/80 backdrop-blur-md text-white font-bold px-2.5 py-1">
-                      {service.category}
-                    </span>
+              <article className="flex h-full w-full flex-col justify-between">
+                <div>
+                  {/* Editorial image */}
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-100">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={service.imageUrl}
+                      alt={service.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover grayscale transition-[transform,filter] duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                    />
+
+                    <div className="absolute left-4 top-4 z-10">
+                      <span className="bg-neutral-950/80 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md">
+                        {service.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Service details */}
+                  <div className="p-6 pb-4 md:p-8 md:pb-4">
+                    <div className="mb-4 flex items-center justify-between">
+                      <span className="font-mono text-xs text-neutral-400">
+                        {service.duration}
+                      </span>
+
+                      <span className="text-[9px] uppercase tracking-[0.15em] text-neutral-400">
+                        Treatment
+                      </span>
+                    </div>
+
+                    <h3 className="mb-3 text-xl font-light tracking-tight text-neutral-900 transition-colors duration-300 group-hover:text-neutral-600">
+                      {service.title}
+                    </h3>
+
+                    <p className="mb-6 text-xs font-light leading-relaxed text-neutral-500">
+                      {service.description}
+                    </p>
                   </div>
                 </div>
 
-                {/* Content Payload Padding Wrapper */}
-                <div className="p-8 pb-0">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs text-neutral-400 font-mono">
-                      {service.duration}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-light text-neutral-900 tracking-tight mb-3">
-                    {service.title}
-                  </h3>
-
-                  <p className="text-neutral-500 font-light text-xs leading-relaxed mb-6">
-                    {service.description}
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-8 pt-0">
-                <ul className="space-y-2 mb-6 border-t border-neutral-100 pt-4" aria-label="Treatment metrics">
-                  {service.benefits.map((benefit, idx) => (
-                    <li key={idx} className="flex items-center text-[11px] text-neutral-400 font-light tracking-wide">
-                      <span className="w-1.5 h-1.5 bg-neutral-300 rounded-full mr-2.5 flex-shrink-0" />
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="flex items-center justify-between border-t border-neutral-100 pt-4 mt-auto">
-                  <span className="text-sm font-semibold tracking-wide text-neutral-900">
-                    {service.price}
-                  </span>
-                                    <a
-                    href="#booking"
-                    className="text-[10px] uppercase tracking-[0.2em] font-bold text-neutral-400 group-hover:text-neutral-900 transition-colors duration-300"
-                    aria-label={`Book ${service.title}`}
+                {/* Benefits and pricing */}
+                <div className="mt-auto p-6 pt-0 md:p-8 md:pt-0">
+                  <ul
+                    className="mb-6 space-y-2 border-t border-neutral-100 pt-4"
+                    aria-label="Treatment benefits"
                   >
-                    Select →
-                  </a>
+                    {service.benefits.map((benefit) => (
+                      <li
+                        key={benefit}
+                        className="flex items-start gap-2 text-xs font-light text-neutral-500"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-1 h-1 w-1 flex-shrink-0 rounded-full bg-neutral-400"
+                        />
+                        {benefit}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="flex items-end justify-between gap-4 border-t border-neutral-100 pt-5">
+                    <div>
+                      <span className="mb-1 block text-[9px] uppercase tracking-[0.2em] text-neutral-400">
+                        From
+                      </span>
+
+                      <p className="text-sm font-medium tracking-tight text-neutral-950">
+                        {service.price}
+                      </p>
+                    </div>
+
+                    <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-900 transition-transform duration-300 group-hover:translate-x-1">
+                      View Details
+                      <span aria-hidden="true">→</span>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </article>
+              </article>
+            </Link>
           ))}
         </div>
 
-        {/* Closing Editorial Footer */}
-        <div className="mt-16 pt-8 border-t border-neutral-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="text-xs text-neutral-400 font-light leading-relaxed">
-            Every treatment is tailored to your individual needs.
+        {visibleServices.length === 0 && (
+          <div className="flex min-h-[300px] flex-col items-center justify-center text-center">
+            <p className="text-lg font-light text-neutral-700">
+              More treatments are on the way.
+            </p>
+            <p className="mt-2 text-sm text-neutral-500">
+              Please check back soon.
+            </p>
+          </div>
+        )}
+
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-neutral-200 pt-6 sm:flex-row sm:items-center">
+          <p className="text-xs font-light leading-relaxed text-neutral-500">
+            Not sure which treatment is right for you?
           </p>
 
-          <a
-            href="#booking"
-            className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] font-bold text-neutral-900 hover:text-neutral-500 transition-colors"
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-900 transition-colors hover:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-4"
           >
-            Discover Your Treatment
+            Speak to our team
             <span aria-hidden="true">↗</span>
-          </a>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import ScrollProvider from "@/components/providers/ScrollProvider";
+import PageTransitionProvider from "@/components/providers/PageTransitionProvider";
 import HeaderMatrix from "@/components/navigation/HeaderMatrix";
+import FooterMatrix from "@/components/navigation/FooterMatrix";
+import WhatsAppButton from "@/components/navigation/WhatsAppButton";
 import "@/app/globals.css";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Chez Melove | Premium Unisex Salon Cape Town",
@@ -20,12 +24,21 @@ export default function RootLayout({
   return (
     <html lang="en" className="antialiased selection:bg-neutral-900 selection:text-white">
       <body className="bg-neutral-50 text-neutral-900 overflow-x-hidden min-h-screen">
-        <ScrollProvider>
-          <HeaderMatrix />
-          <main className="relative min-h-screen w-full md:pt-[80px]">
-            {children}
-          </main>
-        </ScrollProvider>
+        <Suspense fallback={null}>
+          <ScrollProvider>
+            <PageTransitionProvider>
+              <HeaderMatrix />
+
+              <main className="relative min-h-screen w-full md:pt-[80px]">
+                {children}
+              </main>
+
+              <WhatsAppButton />
+
+              <FooterMatrix />
+            </PageTransitionProvider>
+          </ScrollProvider>
+        </Suspense>
       </body>
     </html>
   );

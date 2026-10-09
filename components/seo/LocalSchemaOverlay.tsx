@@ -8,8 +8,8 @@ export default function LocalSchemaOverlay() {
     "image": [
       "https://melove.co.za"
     ],
-    "@id": "https://melove.co.za",
-    "url": "https://melove.co.za",
+    "@id": "https://chezmelove.co.za",
+    "url": "https://chezmelove.co.za",
     "telephone": "+27210000000",
     "priceRange": "$$$",
     "address": {
