@@ -11,7 +11,7 @@ export default function WhatsAppButton() {
   const textMessage = encodeURIComponent(
     "Hello Chez Melove. I would like to inquire about booking an premium session at your Cape Town unisex salon."
   );
-  const whatsappUrl = `https://wa.me{phoneNumber}?text=${textMessage}`;
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${textMessage}`;
 
   useEffect(() => {
     // Elegant entrance delay to avoid triggering content shifts or early layout clutter

@@ -14,7 +14,7 @@ interface NavItem {
 
 const NAVIGATION_ITEMS: NavItem[] = [
   { label: "Services", href: "/services", seoContext: "Premium Hair & Aesthetic Treatments", icon: Scissors },
-  { label: "Our Story", href: "#story", seoContext: "About Chez Melove Salon", icon: Sparkles },
+  { label: "Our Story", href: "/story", seoContext: "About Chez Melove Salon", icon: Sparkles },
   { label: "Gallery", href: "/gallery", seoContext: "Editorial Lookbook", icon: Image },
   { label: "Contact", href: "/contact", seoContext: "Find Us in Cape Town", icon: PhoneCall },
 ];
