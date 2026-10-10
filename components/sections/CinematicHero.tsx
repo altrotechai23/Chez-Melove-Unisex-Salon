@@ -18,7 +18,7 @@ interface SlideItem {
 const HERO_SLIDES: SlideItem[] = [
   {
     type: "video",
-    url: "/videos/salon-hero.mp4",
+    url: "/videos/chezmelove/manicure.mp4",
     fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
     heading: "Chez Melove Salon",
     subheading: "Premium Editorial Craftsmanship — Cape Town",
@@ -29,12 +29,27 @@ const HERO_SLIDES: SlideItem[] = [
     heading: "Precision Aesthetics",
     subheading: "High-Performance Hair & Beauty Luxury",
   },
+   {
+    type: "video",
+    url: "/videos/chezmelove/facial-massage-mobile.webm",
+    fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
+    heading: "Chez Melove Salon",
+    subheading: "Premium Editorial Craftsmanship — Cape Town",
+  },
   {
     type: "image",
-    url: "/images/chezmelove/manicure.jpeg",
+    url: "/images/chezmelove/hair-plant.jpeg",
     heading: "Modern Architecture",
     subheading: "A Sanctuary for Modern Beauty",
   },
+   {
+    type: "video",
+    url: "/videos/chezmelove/pedicure-mobile.webm",
+    fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
+    heading: "Chez Melove Salon",
+    subheading: "Premium Editorial Craftsmanship — Cape Town",
+  },
+
 ];
 
 export default function CinematicHero() {
