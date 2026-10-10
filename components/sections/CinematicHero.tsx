@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link"; // using standard global gsap imports
 import { gsap  } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGlobalBooking } from "../providers/BookingDialogProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,7 +59,7 @@ export default function CinematicHero() {
   const mediaContainerRef = useRef<HTMLDivElement>(null);
   const slidesRef = useRef<HTMLDivElement[]>([]);
   const isAnimating = useRef(false);
-
+  const { openBooking } = useGlobalBooking();
   // Velocity-driven dizziness & fixed parallax effect engine
   useEffect(() => {
     const mediaContainer = mediaContainerRef.current;
@@ -225,12 +226,12 @@ export default function CinematicHero() {
                 </span>
               </h1>
               <div className="animate-text flex items-center justify-center gap-4">
-                <Link
-                  href="#booking"
+                <button
+                  onClick={() =>openBooking()}
                   className="bg-white text-neutral-950 px-6 py-3 text-xs uppercase tracking-[0.2em] font-semibold transition-transform active:scale-95"
                 >
                   Book Session
-                </Link>
+                </button>
               </div>
             </div>
           </div>
