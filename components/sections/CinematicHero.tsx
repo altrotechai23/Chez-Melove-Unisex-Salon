@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import Link from "next/link"; // using standard global gsap imports
 import { gsap  } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGlobalBooking } from "../providers/BookingDialogProvider";
@@ -25,11 +24,20 @@ const HERO_SLIDES: SlideItem[] = [
     subheading: "Premium Editorial Craftsmanship — Cape Town",
   },
   {
-    type: "image",
-    url: "/images/chezmelove/hair-men.jpeg",
-    heading: "Precision Aesthetics",
-    subheading: "High-Performance Hair & Beauty Luxury",
+    type: "video",
+    url: "/videos/chezmelove/chez-melove-ads.mp4",
+    fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
+    heading: "Chez Melove Salon Ads",
+    subheading: "Premium Editorial Craftsmanship — Cape Town",
   },
+    {
+    type: "video",
+    url: "/videos/chezmelove/chez-melove-braids.mp4",
+    fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
+    heading: "Chez Melove Salon Ads",
+    subheading: "Premium Editorial Craftsmanship — Cape Town",
+  },
+  
    {
     type: "video",
     url: "/videos/chezmelove/facial-massage-mobile.webm",
@@ -37,17 +45,39 @@ const HERO_SLIDES: SlideItem[] = [
     heading: "Chez Melove Salon",
     subheading: "Premium Editorial Craftsmanship — Cape Town",
   },
-  {
-    type: "image",
-    url: "/images/chezmelove/hair-plant.jpeg",
-    heading: "Modern Architecture",
-    subheading: "A Sanctuary for Modern Beauty",
+    {
+    type: "video",
+    url: "/videos/chezmelove/chez-melove-haircuts.mp4",
+    fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
+    heading: "Chez Melove Salon Ads",
+    subheading: "Premium Editorial Craftsmanship — Cape Town",
   },
    {
     type: "video",
     url: "/videos/chezmelove/pedicure-mobile.webm",
     fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
     heading: "Chez Melove Salon",
+    subheading: "Premium Editorial Craftsmanship — Cape Town",
+  },
+    {
+    type: "video",
+    url: "/videos/chezmelove/chez-melove-long-braids.mp4",
+    fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
+    heading: "Chez Melove Salon Ads",
+    subheading: "Premium Editorial Craftsmanship — Cape Town",
+  },
+    {
+    type: "video",
+    url: "/videos/chezmelove/chez-melove-unisex-salon.mp4",
+    fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
+    heading: "Chez Melove Salon Ads",
+    subheading: "Premium Editorial Craftsmanship — Cape Town",
+  },
+    {
+    type: "video",
+    url: "/videos/chezmelove/chez-melove-nails-treatment.mp4",
+    fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
+    heading: "Chez Melove Salon Ads",
     subheading: "Premium Editorial Craftsmanship — Cape Town",
   },
 
