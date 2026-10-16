@@ -289,7 +289,7 @@ export default async function ServiceDetailPage({
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 
-                <ServiceBookingButton className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/35 bg-white/5 px-6 py-3 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                <ServiceBookingButton className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-900 transition-colors hover:bg-stone-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                   Booking Now
                   <ArrowUpRight size={17} />
                 </ServiceBookingButton>
@@ -622,13 +622,10 @@ export default async function ServiceDetailPage({
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/booking"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-900 transition-colors hover:bg-stone-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                >
-                  Book now
-                  <ArrowUpRight size={16} />
-                </Link>
+                <ServiceBookingButton className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-900 transition-colors hover:bg-stone-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                  Booking Now
+                  <ArrowUpRight size={17} />
+                </ServiceBookingButton>
 
                 <Link
                   href="/services"

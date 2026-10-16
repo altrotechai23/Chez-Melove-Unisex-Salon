@@ -79,7 +79,7 @@ export default function FooterMatrix() {
             </li>
             <li className="pt-2">
               <a 
-                href="https://instagram.com" 
+                href="https://instagram.com/chez_melove_unisex" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-[10px] uppercase tracking-[0.25em] bg-neutral-900 border border-neutral-800 text-neutral-300 px-3 py-1.5 hover:bg-white hover:text-neutral-950 transition-all inline-block"
