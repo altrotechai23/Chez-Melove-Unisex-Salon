@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 import { SERVICES_DATA } from "@/data/services";
+import ServiceBookingButton from "@/components/Servicebookingbutton";
 
 const SITE_URL = "https://melove.co.za";
 const SITE_NAME = "Chez Melove Unisex Salon";
@@ -74,7 +75,7 @@ function getWhatsAppUrl(service: Service) {
 
   // No salon phone number was supplied.
   // This opens WhatsApp's share/contact flow with the enquiry prefilled.
-  return `https://wa.me/?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/27680678559?text=${encodeURIComponent(message)}`;
 }
 
 export async function generateMetadata({
@@ -287,15 +288,13 @@ export default async function ServiceDetailPage({
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
-                <Link
-                  href="/booking"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-900 transition-colors hover:bg-stone-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
-                >
-                  Book this service
+                
+                <ServiceBookingButton className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/35 bg-white/5 px-6 py-3 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                  Booking Now
                   <ArrowUpRight size={17} />
-                </Link>
+                </ServiceBookingButton>
 
-                <a
+                <a 
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -562,16 +561,14 @@ export default async function ServiceDetailPage({
               </div>
 
               <div className="mt-7 space-y-3">
-                <Link
-                  href="/booking"
-                  className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-stone-900 px-5 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
-                >
-                  Book an appointment
-                  <ArrowUpRight
-                    size={16}
-                    className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  />
-                </Link>
+                
+                <ServiceBookingButton className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full
+                   bg-stone-900 px-5 py-3 text-center text-sm font-semibold text-white transition-colors
+                    hover:bg-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900
+                     focus-visible:ring-offset-2">
+                  Booking Now
+                  <ArrowUpRight size={17}  className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </ServiceBookingButton>
 
                 <a
                   href={whatsappUrl}
