@@ -35,7 +35,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       "Dark & Lovely — Retouch R300",
     ],
     imageUrl:
-      "https://images.unsplash.com/photo-1560869713-7d0a29430803?auto=format&fit=crop&w=1200&q=85",
+      "images/chezmelove/hair-dressing.jpg",
   },
   {
     id: "h2",
@@ -59,7 +59,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       "Dry perm — Long R450",
     ],
     imageUrl:
-      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85",
+      "images/chezmelove/blow-and-perms.jpeg",
   },
   {
     id: "h3",
@@ -226,7 +226,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       "Singles braids — Long R500",
     ],
     imageUrl:
-      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=1200&q=85",
+      "/images/chezmelove/braids-twist.jpg",
   },
   {
     id: "h11",
@@ -255,7 +255,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       "Dreadlock extensions — Long R2,500",
     ],
     imageUrl:
-      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=1200&q=85",
+      "images/chezmelove/dreadlocks-and-twisting.jpg",
   },
   {
     id: "h12",
@@ -485,9 +485,9 @@ export const SERVICES_DATA: ServiceItem[] = [
       "Acrylic — Plain R300",
       "Acrylic — Design R400",
       "Acrylic — Medium R350",
-      "Acrylic — Large R400",
+      "Acrylic — Long R400",
       "Poly Gel — Medium R350 L R400 Short R300",
-      "Soft Gel Tips — Medium R350 L R380 Short R300",
+      "Soft Gel Tips — Medium R350 Long R380 Short R300",
       "Nail Art — R50 extra change"
     ],
     imageUrl:
