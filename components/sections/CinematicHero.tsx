@@ -30,50 +30,42 @@ const HERO_SLIDES: SlideItem[] = [
     heading: "Chez Melove Salon Ads",
     subheading: "Premium Editorial Craftsmanship — Cape Town",
   },
-    {
+  {
     type: "video",
     url: "/videos/chezmelove/chez-melove-braids.mp4",
     fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
     heading: "Chez Melove Salon Ads",
     subheading: "Premium Editorial Craftsmanship — Cape Town",
   },
-  
-   {
-    type: "video",
-    url: "/videos/chezmelove/facial-massage-mobile.webm",
-    fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
-    heading: "Chez Melove Salon",
-    subheading: "Premium Editorial Craftsmanship — Cape Town",
-  },
-    {
+  {
     type: "video",
     url: "/videos/chezmelove/chez-melove-haircuts.mp4",
     fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
     heading: "Chez Melove Salon Ads",
     subheading: "Premium Editorial Craftsmanship — Cape Town",
   },
-   {
+  {
     type: "video",
     url: "/videos/chezmelove/pedicure-mobile.webm",
     fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
     heading: "Chez Melove Salon",
     subheading: "Premium Editorial Craftsmanship — Cape Town",
   },
-    {
+  {
     type: "video",
     url: "/videos/chezmelove/chez-melove-long-braids.mp4",
     fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
     heading: "Chez Melove Salon Ads",
     subheading: "Premium Editorial Craftsmanship — Cape Town",
   },
-    {
+  {
     type: "video",
     url: "/videos/chezmelove/chez-melove-unisex-salon.mp4",
     fallbackUrl: "/images/chezmelove/hairstyle-women.avif",
     heading: "Chez Melove Salon Ads",
     subheading: "Premium Editorial Craftsmanship — Cape Town",
   },
-    {
+  {
     type: "video",
     url: "/videos/chezmelove/chez-melove-nails-treatment.mp4",
     fallbackUrl: "/images/chezmelove/hairstyle-women.avif",

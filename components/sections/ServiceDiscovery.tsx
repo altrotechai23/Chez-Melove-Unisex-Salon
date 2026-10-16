@@ -1,423 +1,332 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  Sparkles,
+} from "lucide-react";
 
-interface ServiceItem {
-  id: string;
-  slug: string;
-  title: string;
-  category: "hair" | "aesthetics" | "wellness";
-  duration: string;
-  price: string;
-  description: string;
-  benefits: string[];
-  imageUrl: string;
-}
+import { SERVICES_DATA } from "@/data/services";
 
-const SERVICES_DATA: ServiceItem[] = [
-  {
-    id: "h1",
-    slug: "editorial-cut-style",
-    title: "Editorial Precision Cut & Style",
-    category: "hair",
-    duration: "60 min",
-    price: "R 650 - R 950",
-    description:
-      "High-end bespoke structural cutting tailored to individual texture and identity, including a luxury scalp massage and premium blowout finish.",
-    benefits: [
-      "Bespoke mapping",
-      "Premium styling",
-      "Scalp detox therapy",
-    ],
-    imageUrl: "/images/chezmelove/hair-men.jpeg",
-  },
-  {
-    id: "h2",
-    slug: "signature-balayage-dimensional-tone",
-    title: "Signature Balayage & Dimensional Tone",
-    category: "hair",
-    duration: "180 min",
-    price: "R 1,800 - R 2,600",
-    description:
-      "Hand-painted, fluid color gradients that grow out gracefully. Customized processing to preserve hair strand health and structure.",
-    benefits: [
-      "Olaplex bond shield",
-      "Custom tone calibration",
-      "UV defense glaze",
-    ],
-    imageUrl:
-      "https://images.unsplash.com/photo-1560869713-7d0a29430803?auto=format&fit=crop&w=1200&q=85",
-  },
-  {
-    id: "a1",
-    slug: "advanced-microneedling-collagen-therapy",
-    title: "Advanced Micro-Needling Collagen Therapy",
-    category: "aesthetics",
-    duration: "75 min",
-    price: "R 1,400",
-    description:
-      "Precision-focused skin rejuvenation designed to improve the appearance of fine lines, uneven tone, and skin texture.",
-    benefits: [
-      "Personalized skin consultation",
-      "Targeted skin treatment",
-      "Post-treatment care guidance",
-    ],
-    imageUrl:
-      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1200&q=85",
-  },
-  {
-    id: "a2",
-    slug: "hydro-infusion-deep-pore-resurfacing",
-    title: "Hydro-Infusion Deep Pore Resurfacing",
-    category: "aesthetics",
-    duration: "45 min",
-    price: "R 850",
-    description:
-      "A refreshing facial treatment combining deep cleansing and targeted serum application for a smoother, revitalized-looking complexion.",
-    benefits: [
-      "Deep pore cleansing",
-      "Hydration boost",
-      "Antioxidant skincare",
-    ],
-    imageUrl:
-      "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=1200&q=85",
-  },
-  {
-    id: "w1",
-    slug: "aromatherapy-stress-release",
-    title: "Aromatherapy Stress Release",
-    category: "wellness",
-    duration: "90 min",
-    price: "R 1,100",
-    description:
-      "A restorative relaxation experience combining massage techniques and aromatic oils to help ease everyday tension.",
-    benefits: [
-      "Relaxing massage experience",
-      "Aromatic oil selection",
-      "Restorative atmosphere",
-    ],
-    imageUrl:
-      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=85",
-  },
-  {
-    id: "w2",
-    slug: "detoxifying-scalp-spa-blowout",
-    title: "Detoxifying Scalp Spa & Blowout Combination",
-    category: "hair",
-    duration: "75 min",
-    price: "R 750",
-    description:
-      "A scalp-care experience paired with deep conditioning and a polished blowout for refreshed roots and a glossy finish.",
-    benefits: [
-      "Scalp exfoliation",
-      "Conditioning treatment",
-      "High-gloss styling finish",
-    ],
-    imageUrl:
-      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85",
-  },
-];
+const SITE_NAME = "Chez Melove Unisex Salon";
+const MAX_FEATURED_SERVICES = 6;
 
-const CATEGORIES = [
-  { slug: "all", label: "All Treatments" },
-  { slug: "hair", label: "Hair Crafting" },
-  { slug: "aesthetics", label: "Modern Aesthetics" },
-  { slug: "wellness", label: "Luxury Wellness" },
+const CATEGORY_ORDER = [
+  "hair",
+  "braiding",
+  "aesthetics",
+  "wellness",
 ] as const;
 
-type Category = (typeof CATEGORIES)[number]["slug"];
+const CATEGORY_LABELS: Record<string, string> = {
+  hair: "Hair",
+  braiding: "Braids & Locs",
+  aesthetics: "Nails & Beauty",
+  wellness: "Wellness",
+};
 
-export default function ServiceDiscovery() {
-  const [activeCategory, setActiveCategory] = useState<Category>("all");
-  const [visibleServices, setVisibleServices] =
-    useState<ServiceItem[]>(SERVICES_DATA);
+export default function FeaturedServices() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
 
-  const gridRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<gsap.core.Timeline | null>(null);
-  const activeCategoryRef = useRef<Category>("all");
+  const featuredServices = useMemo(() => {
+    const selected = new Set<string>();
 
-  const handleCategoryChange = useCallback(
-    (category: Category) => {
-      if (category === activeCategoryRef.current) return;
+    // First, include one service from each available category.
+    for (const category of CATEGORY_ORDER) {
+      const service = SERVICES_DATA.find(
+        (item) =>
+          item.category === category &&
+          !selected.has(item.slug),
+      );
 
-      activeCategoryRef.current = category;
-      setActiveCategory(category);
-
-      // Stop any unfinished filter animation.
-      animationRef.current?.kill();
-
-      const grid = gridRef.current;
-
-      if (!grid) {
-        setVisibleServices(
-          category === "all"
-            ? SERVICES_DATA
-            : SERVICES_DATA.filter(
-                (service) => service.category === category,
-              ),
-        );
-        return;
+      if (service) {
+        selected.add(service.slug);
       }
+    }
 
-      const cards = grid.querySelectorAll<HTMLElement>(".service-card");
+    // Add a second service from each category where available.
+    for (const category of CATEGORY_ORDER) {
+      if (selected.size >= MAX_FEATURED_SERVICES) break;
 
-      if (cards.length === 0) {
-        setVisibleServices(
-          category === "all"
-            ? SERVICES_DATA
-            : SERVICES_DATA.filter(
-                (service) => service.category === category,
-              ),
-        );
-        return;
+      const service = SERVICES_DATA.find(
+        (item) =>
+          item.category === category &&
+          !selected.has(item.slug),
+      );
+
+      if (service) {
+        selected.add(service.slug);
       }
+    }
 
-      animationRef.current = gsap.timeline({
-        onComplete: () => {
-          setVisibleServices(
-            category === "all"
-              ? SERVICES_DATA
-              : SERVICES_DATA.filter(
-                  (service) => service.category === category,
-                ),
-          );
-        },
-      });
+    // Fill remaining spaces from the existing catalogue.
+    for (const service of SERVICES_DATA) {
+      if (selected.size >= MAX_FEATURED_SERVICES) break;
+      selected.add(service.slug);
+    }
 
-      animationRef.current.to(cards, {
-        opacity: 0,
-        y: 15,
-        scale: 0.98,
-        duration: 0.25,
-        stagger: 0.035,
-        ease: "power2.in",
-      });
-    },
-    [],
-  );
+    // Preserve the original catalogue order in the rendered cards.
+    return SERVICES_DATA.filter((service) =>
+      selected.has(service.slug),
+    ).slice(0, MAX_FEATURED_SERVICES);
+  }, []);
 
   useEffect(() => {
-    const grid = gridRef.current;
+    const section = sectionRef.current;
+    const cards = cardsRef.current;
 
-    if (!grid) return;
-
-    const cards = grid.querySelectorAll<HTMLElement>(".service-card");
-
-    if (cards.length === 0) return;
+    if (!section || !cards) return;
 
     const context = gsap.context(() => {
+      const heading = section.querySelectorAll("[data-featured-heading]");
+      const serviceCards = cards.querySelectorAll(
+        "[data-featured-card]",
+      );
+      const footer = section.querySelector("[data-featured-footer]");
+
       gsap.fromTo(
-        cards,
+        heading,
         {
-          opacity: 0,
-          y: 24,
-          scale: 0.98,
+          autoAlpha: 0,
+          y: 22,
         },
         {
-          opacity: 1,
+          autoAlpha: 1,
           y: 0,
-          scale: 1,
-          duration: 0.5,
-          stagger: 0.06,
+          duration: 0.7,
+          stagger: 0.12,
           ease: "power3.out",
+          scrollTrigger: undefined,
+        },
+      );
+
+      gsap.fromTo(
+        serviceCards,
+        {
+          autoAlpha: 0,
+          y: 28,
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.65,
+          stagger: 0.1,
+          ease: "power3.out",
+          delay: 0.12,
           clearProps: "transform",
         },
       );
-    }, grid);
 
-    return () => {
-      context.revert();
-      animationRef.current?.kill();
-      animationRef.current = null;
-    };
-  }, [visibleServices]);
+      if (footer) {
+        gsap.fromTo(
+          footer,
+          { autoAlpha: 0, y: 14 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.55,
+            delay: 0.3,
+            ease: "power2.out",
+          },
+        );
+      }
+    }, section);
+
+    return () => context.revert();
+  }, []);
+
+  if (featuredServices.length === 0) return null;
 
   return (
     <section
-      id="services"
-      className="w-full scroll-mt-16 border-b border-neutral-200 bg-neutral-50 px-5 py-20 text-neutral-900 sm:px-8 md:px-12 md:py-24"
-      aria-labelledby="services-title"
+      ref={sectionRef}
+      aria-labelledby="featured-services-heading"
+      className="relative overflow-hidden bg-[#faf9f6] py-16 sm:py-20 lg:py-28"
     >
-      <div className="mx-auto max-w-7xl">
-        <header className="mb-10 max-w-xl md:mb-12">
-          <span className="mb-3 block text-[10px] font-bold uppercase tracking-[0.4em] text-neutral-400">
-            01 / Core Capabilities
-          </span>
+      <div className="pointer-events-none absolute -right-32 top-20 h-80 w-80 rounded-full bg-stone-200/40 blur-[100px]" />
 
-          <h2
-            id="services-title"
-            className="text-3xl font-light leading-tight tracking-tight text-neutral-900 md:text-5xl"
-          >
-            The Menu Matrix.
-          </h2>
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+        {/* Section heading */}
+        <div className="mb-8 flex flex-col gap-6 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            <div
+              data-featured-heading
+              className="mb-5 inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white/80 px-3.5 py-2"
+            >
+              <Sparkles
+                size={14}
+                className="text-stone-600"
+                aria-hidden="true"
+              />
+              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-600">
+                {SITE_NAME} · Cape Town
+              </span>
+            </div>
 
-          <p className="mt-4 max-w-md text-sm font-light leading-relaxed text-neutral-500">
-            Discover considered treatments, refined techniques, and
-            personalized experiences designed around you.
-          </p>
-        </header>
+            <h2
+              id="featured-services-heading"
+              data-featured-heading
+              className="text-4xl font-normal leading-[1.08] tracking-[-0.045em] text-stone-900 sm:text-5xl lg:text-6xl"
+            >
+              Discover your
+              <br />
+              <span className="font-serif italic text-stone-500">
+                signature look.
+              </span>
+            </h2>
 
-        {/* Horizontally scrollable category filters */}
-        <div className="relative mb-12 border-b border-neutral-200/80 md:mb-16">
-          <div
-            className="flex snap-x snap-mandatory items-center gap-8 overflow-x-auto pb-4 sm:gap-12"
-            role="tablist"
-            aria-label="Treatment categories"
-            style={{
-              WebkitOverflowScrolling: "touch",
-              scrollbarWidth: "none",
-            }}
-          >
-            {CATEGORIES.map((category) => {
-              const isActive = activeCategory === category.slug;
-
-              return (
-                <button
-                  key={category.slug}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  aria-controls="service-results"
-                  onClick={() => handleCategoryChange(category.slug)}
-                  className={`relative flex-shrink-0 snap-start whitespace-nowrap py-2 text-[10px] font-medium uppercase tracking-[0.2em] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-4 sm:text-xs ${
-                    isActive
-                      ? "font-bold text-neutral-950"
-                      : "text-neutral-400 hover:text-neutral-700"
-                  }`}
-                >
-                  {category.label}
-
-                  {isActive && (
-                    <span className="absolute -bottom-[17px] left-0 z-10 h-[2px] w-full bg-neutral-950" />
-                  )}
-                </button>
-              );
-            })}
+            <p
+              data-featured-heading
+              className="mt-5 max-w-xl text-sm leading-7 text-stone-600 sm:text-base sm:leading-8"
+            >
+              From beautiful braids to hair styling and beauty essentials,
+              explore a few of our services and find your next look.
+            </p>
           </div>
+
+          <Link
+            href="/services"
+            className="group inline-flex min-h-12 w-fit shrink-0 items-center justify-center gap-3 rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-medium text-stone-800 transition-all duration-300 hover:border-stone-900 hover:bg-stone-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+          >
+            Explore all services
+            <ArrowUpRight
+              size={17}
+              className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            />
+          </Link>
         </div>
 
-        {/* Service cards */}
+        {/* Featured cards */}
         <div
-          id="service-results"
-          ref={gridRef}
-          role="tabpanel"
-          className="grid min-h-[500px] grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3"
+          ref={cardsRef}
+          className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-6 pt-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:-mx-8 sm:gap-5 sm:px-8 lg:-mx-12 lg:gap-6 lg:px-12"
         >
-          {visibleServices.map((service) => (
-            <Link
-              key={service.id}
-              href={`/services/${service.slug}`}
-              aria-label={`View details for ${service.title}`}
-              className="service-card group flex flex-col overflow-hidden border border-neutral-200/80 bg-white shadow-sm transition-colors duration-500 hover:border-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-4"
-            >
-              <article className="flex h-full w-full flex-col justify-between">
-                <div>
-                  {/* Editorial image */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-100">
+          {featuredServices.map((service) => {
+            const previewItems = service.benefits
+              .filter(Boolean)
+              .slice(0, 2);
+
+            return (
+              <article
+                key={service.id}
+                data-featured-card
+                className="group flex w-[82%] min-w-0 shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-stone-200/80 bg-white transition-[border-color,box-shadow] duration-300 hover:border-stone-300 hover:shadow-[0_24px_60px_-32px_rgba(41,37,36,0.3)] sm:w-[45%] lg:w-[calc((100%-3rem)/3)]"
+              >
+                <Link
+                  href={`/services/${service.slug}`}
+                  aria-label={`Discover ${service.title}`}
+                  className="relative block overflow-hidden bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-inset"
+                >
+                  <div className="relative aspect-[5/4] overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={service.imageUrl}
-                      alt={service.title}
+                      alt={`${service.title} at ${SITE_NAME}`}
                       loading="lazy"
-                      className="h-full w-full object-cover grayscale transition-[transform,filter] duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                     />
 
-                    <div className="absolute left-4 top-4 z-10">
-                      <span className="bg-neutral-950/80 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md">
-                        {service.category}
-                      </span>
-                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
+
+                    <span className="absolute left-3 top-3 rounded-full border border-white/25 bg-black/35 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.15em] text-white backdrop-blur-md sm:left-4 sm:top-4">
+                      {CATEGORY_LABELS[service.category] ??
+                        service.category}
+                    </span>
+
+                    <span className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/15 text-white backdrop-blur-md transition-all duration-300 group-hover:rotate-45 group-hover:bg-white group-hover:text-stone-900 sm:bottom-4 sm:right-4">
+                      <ArrowUpRight size={18} strokeWidth={1.6} />
+                    </span>
                   </div>
+                </Link>
 
-                  {/* Service details */}
-                  <div className="p-6 pb-4 md:p-8 md:pb-4">
-                    <div className="mb-4 flex items-center justify-between">
-                      <span className="font-mono text-xs text-neutral-400">
-                        {service.duration}
-                      </span>
-
-                      <span className="text-[9px] uppercase tracking-[0.15em] text-neutral-400">
-                        Treatment
-                      </span>
-                    </div>
-
-                    <h3 className="mb-3 text-xl font-light tracking-tight text-neutral-900 transition-colors duration-300 group-hover:text-neutral-600">
+                <div className="flex flex-1 flex-col p-4 sm:p-5">
+                  <h3 className="text-lg font-medium leading-snug tracking-tight text-stone-900 sm:text-xl">
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="transition-colors hover:text-stone-500 focus-visible:outline-none focus-visible:underline"
+                    >
                       {service.title}
-                    </h3>
+                    </Link>
+                  </h3>
 
-                    <p className="mb-6 text-xs font-light leading-relaxed text-neutral-500">
-                      {service.description}
-                    </p>
-                  </div>
-                </div>
+                  <p className="mt-3 line-clamp-3 text-xs leading-6 text-stone-500 sm:text-sm">
+                    {service.description}
+                  </p>
 
-                {/* Benefits and pricing */}
-                <div className="mt-auto p-6 pt-0 md:p-8 md:pt-0">
-                  <ul
-                    className="mb-6 space-y-2 border-t border-neutral-100 pt-4"
-                    aria-label="Treatment benefits"
-                  >
-                    {service.benefits.map((benefit) => (
-                      <li
-                        key={benefit}
-                        className="flex items-start gap-2 text-xs font-light text-neutral-500"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="mt-1 h-1 w-1 flex-shrink-0 rounded-full bg-neutral-400"
-                        />
-                        {benefit}
-                      </li>
-                    ))}
-                  </ul>
+                  {previewItems.length > 0 && (
+                    <ul className="mt-4 space-y-2 border-t border-stone-100 pt-4">
+                      {previewItems.map((item, index) => (
+                        <li
+                          key={`${service.id}-${index}`}
+                          className="flex items-start gap-2 text-xs leading-5 text-stone-600"
+                        >
+                          <Check
+                            size={14}
+                            className="mt-0.5 shrink-0 text-stone-400"
+                            aria-hidden="true"
+                          />
+                          <span className="line-clamp-2">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
 
-                  <div className="flex items-end justify-between gap-4 border-t border-neutral-100 pt-5">
-                    <div>
-                      <span className="mb-1 block text-[9px] uppercase tracking-[0.2em] text-neutral-400">
-                        From
-                      </span>
-
-                      <p className="text-sm font-medium tracking-tight text-neutral-950">
-                        {service.price}
+                  <div className="mt-auto flex items-end justify-between gap-3 border-t border-stone-100 pt-5">
+                    <div className="min-w-0">
+                      <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-stone-400">
+                        Listed price
+                      </p>
+                      <p className="mt-1 break-words text-lg font-semibold tracking-tight text-stone-900">
+                        {service.price.replace(/^From\s*/i, "")}
                       </p>
                     </div>
 
-                    <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-900 transition-transform duration-300 group-hover:translate-x-1">
-                      View Details
-                      <span aria-hidden="true">→</span>
-                    </span>
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-stone-200 px-3.5 py-2 text-xs font-semibold text-stone-800 transition-colors hover:border-stone-900 hover:bg-stone-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+                    >
+                      Explore
+                      <ArrowRight size={13} />
+                    </Link>
                   </div>
                 </div>
               </article>
-            </Link>
-          ))}
+            );
+          })}
         </div>
 
-        {visibleServices.length === 0 && (
-          <div className="flex min-h-[300px] flex-col items-center justify-center text-center">
-            <p className="text-lg font-light text-neutral-700">
-              More treatments are on the way.
-            </p>
-            <p className="mt-2 text-sm text-neutral-500">
-              Please check back soon.
-            </p>
-          </div>
-        )}
-
-        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-neutral-200 pt-6 sm:flex-row sm:items-center">
-          <p className="text-xs font-light leading-relaxed text-neutral-500">
-            Not sure which treatment is right for you?
+        {/* Footer link and swipe cue */}
+        <div
+          data-featured-footer
+          className="flex flex-col gap-4 border-t border-stone-200 pt-5 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <p className="text-xs leading-6 text-stone-500">
+            A selection of {featuredServices.length} services from our full
+            salon menu.
           </p>
 
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-900 transition-colors hover:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-4"
-          >
-            Speak to our team
-            <span aria-hidden="true">↗</span>
-          </Link>
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-stone-400 sm:hidden">
+              Swipe to explore
+            </span>
+
+            <Link
+              href="/services"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-stone-800 transition-colors hover:text-stone-500"
+            >
+              View the full service menu
+              <ArrowRight
+                size={15}
+                className="transition-transform group-hover:translate-x-1"
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </section>

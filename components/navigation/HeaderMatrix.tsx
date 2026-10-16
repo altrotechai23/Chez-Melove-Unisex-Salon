@@ -29,8 +29,8 @@ const NAVIGATION_ITEMS: NavItem[] = [
     icon: Scissors,
   },
   {
-    label: "Our Story",
-    href: "/#story",
+    label: "About Us",
+    href: "/about",
     seoContext: "About Chez Melove Salon",
     icon: Sparkles,
   },
