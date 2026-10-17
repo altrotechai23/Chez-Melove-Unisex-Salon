@@ -38,7 +38,7 @@ export default function RootLayout({
       className="antialiased selection:bg-neutral-900 selection:text-white"
     >
       <body className="min-h-screen overflow-x-hidden bg-neutral-50 text-neutral-900">
-        <BookingDialogProvider>
+        {/* <BookingDialogProvider>
           <Suspense fallback={null}>
             <ScrollProvider>
               <PageTransitionProvider>
@@ -53,7 +53,17 @@ export default function RootLayout({
               </PageTransitionProvider>
             </ScrollProvider>
           </Suspense>
-        </BookingDialogProvider>
+        </Booking+DialogProvider> */}
+       
+        <div className="min-h-screen flex flex-col justify-center items-center text-center p-4">
+          <h1 className="text-4xl font-bold mb-4 text-black">Website Under Maintenance</h1>
+          <p className="max-w-3xl text-gray-600">
+            We&apos;re currently making improvements to serve you better.
+            Our website will be back online soon. Thank you for your patience and understanding! 
+            We are currently working on the final version of the web.
+          </p>
+        </div>
+      
       </body>
     </html>
   );

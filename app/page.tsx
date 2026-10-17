@@ -8,33 +8,26 @@ import BrandMarquee from "@/components/sections/BrandMarquee";
 
 export default function HomePage() {
   return (
-    // <>
-
-    //   {/* Structured Markup Data for Local Search Optimization */}
-    //   <LocalSchemaOverlay />
-
-    //   {/* Cinematic Fluid Background Presentation Viewport */}
-    //   <CinematicHero />
-
-    //   {/* Programmatic Service Matrix and Dynamic Content Discovery Grid */}
-    //   <ServiceDiscovery />
-
-    //   <BrandMarquee />
-
-    //   {/* Luxury Brand Narrative and Editorial Gallery Portfolio Module */}
-    //   <BrandNarrativeGallery />
-
-    //   {/* Google Reviews Social Verification Engine */}
-    //   <GoogleReviews />
-
-    //   {/* High-Conversion Multi-Step Local Reservation Engine */}
-    //   <BookingMatrix />
-    // </>
     <>
-      <div className="h-full w-full flex justify-center items-center">
-        <h1>This site is under maintenance </h1>
-        <p>We are currently working on the final version of the web.</p>
-      </div>
+      {/* Structured Markup Data for Local Search Optimization */}
+      <LocalSchemaOverlay />
+
+      {/* Cinematic Fluid Background Presentation Viewport */}
+      <CinematicHero />
+
+      {/* Programmatic Service Matrix and Dynamic Content Discovery Grid */}
+      <ServiceDiscovery />
+
+      <BrandMarquee />
+
+      {/* Luxury Brand Narrative and Editorial Gallery Portfolio Module */}
+      <BrandNarrativeGallery />
+
+      {/* Google Reviews Social Verification Engine */}
+      <GoogleReviews />
+
+      {/* High-Conversion Multi-Step Local Reservation Engine */}
+      <BookingMatrix />
     </>
   );
 }
