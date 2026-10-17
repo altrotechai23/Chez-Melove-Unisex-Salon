@@ -15,6 +15,44 @@ export interface ServiceItem {
 // Keep your supplied SERVICES_DATA array here.
 // Add the export keyword to the existing declaration:
 export const SERVICES_DATA: ServiceItem[] = [
+   {
+    id: "b5",
+    slug: "singles-braids-twists",
+    title: "Singles Braids & Twists",
+    category: "braiding",
+    duration: "Price list",
+    price: "From R450",
+    description:
+      "Jumbo, bob, box, micro and knotless braids, plus passion twists and faux locs.",
+    benefits: [
+      "Jumbo braids — Medium R450, Large R500, XL R550, XXL R600",
+      "Jumbo braids boho — Medium R500, Large R550, XL R650, XXL R700",
+      "Jumbo braids knotless — Medium R550, Large R600, XL R650, XXL R700",
+      "Jumbo braids knotless boho — Medium R600, Large R650, XL R700, XXL R800",
+      "Bob braids, big — Short R500, Long R600",
+      "Bob braids, medium — Short R550, Long R650",
+      "Box braids, big — Medium R600, Large R700, XL R800, XXL R900",
+      "Box braids, big boho — Medium R700, Large R800, XL R900, XXL R1,000",
+      "Box braids, medium — Medium R750, Large R850, XL R950, XXL R1,050",
+      "Box braids, medium boho — Medium R850, Large R950, XL R1,050, XXL R1,200",
+      "Box braids, small — Medium R900, Large R1,100, XL R1,300, XXL R1,500",
+      "Box braids, small boho — Medium R1,100, Large R1,300, XL R1,500, XXL R1,700",
+      "Micro braids — Medium R1,100, Large R1,300, XL R1,500, XXL R1,700",
+      "Knotless braids, big — Medium R750, Large R900, XL R1,050, XXL R1,200",
+      "Knotless braids, big boho — Medium R850, Large R950, XL R1,100, XXL R1,300",
+      "Knotless braids, medium — Medium R900, Large R1,100, XL R1,300, XXL R1,500",
+      "Knotless braids, medium boho — Medium R1,100, Large R1,300, XL R1,500, XXL R1,700",
+      "Knotless braids, small — Medium R1,100, Large R1,300, XL R1,500, XXL R1,700",
+      "Knotless braids, small boho — Medium R1,300, Large R1,500, XL R1,700, XXL R1,900",
+      "Passion twist, big — Medium R750, Large R900, XL R1,100, XXL R1,300",
+      "Passion twist, medium — Medium R900, Large R1,100, XL R1,300, XXL R1,500",
+      "Passion twist, small — Medium R1,100, Large R1,300, XL R1,500, XXL R1,800",
+      "Passion twist, micro — Medium R1,300, Large R1,500, XL R1,700, XXL R2,000",
+      "Faux locs, big — Small R800, Medium R1,000, Large R1,200",
+    ],
+    imageUrl:
+      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=1200&q=85",
+  },
   {
     id: "h1",
     slug: "relaxers",
@@ -241,7 +279,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     benefits: [
       "Twisting — Starting at R800",
       "Twist & style R800",
-      "Undo Dreadlocks Short — R3000 ",
+      "Undo Dreadlocks Short — R3000",
       "Undo Dreadlocks Short — R5000 ",
       "Crocheting Afro hair — Start, short R1,000",
       "Crocheting Afro hair — Start, medium R1,000",
@@ -255,7 +293,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       "Dreadlock extensions — Long R2,500",
     ],
     imageUrl:
-      "images/chezmelove/dreadlocks-and-twisting.jpg",
+      "images/chezmelove/dreadlocks-men.jpeg",
   },
   {
     id: "h12",
@@ -331,22 +369,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     imageUrl:
       "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=1200&q=85",
   },
-  {
-    id: "h16",
-    slug: "pick-n-drop",
-    title: "Pick N Drop",
-    category: "braiding",
-    duration: "Price list",
-    price: "From R600",
-    description: "Pick N Drop styling with pricing based on braid size.",
-    benefits: [
-      "Medium R600",
-      "Small R750",
-      "Micro R900",
-    ],
-    imageUrl:
-      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=1200&q=85",
-  },
+ 
   {
     id: "b1",
     slug: "freehand-braiding",
@@ -428,44 +451,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     imageUrl:
       "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=1200&q=85",
   },
-  {
-    id: "b5",
-    slug: "singles-braids-twists",
-    title: "Singles Braids & Twists",
-    category: "braiding",
-    duration: "Price list",
-    price: "From R450",
-    description:
-      "Jumbo, bob, box, micro and knotless braids, plus passion twists and faux locs.",
-    benefits: [
-      "Jumbo braids — Medium R450, Large R500, XL R550, XXL R600",
-      "Jumbo braids boho — Medium R500, Large R550, XL R650, XXL R700",
-      "Jumbo braids knotless — Medium R550, Large R600, XL R650, XXL R700",
-      "Jumbo braids knotless boho — Medium R600, Large R650, XL R700, XXL R800",
-      "Bob braids, big — Short R500, Long R600",
-      "Bob braids, medium — Short R550, Long R650",
-      "Box braids, big — Medium R600, Large R700, XL R800, XXL R900",
-      "Box braids, big boho — Medium R700, Large R800, XL R900, XXL R1,000",
-      "Box braids, medium — Medium R750, Large R850, XL R950, XXL R1,050",
-      "Box braids, medium boho — Medium R850, Large R950, XL R1,050, XXL R1,200",
-      "Box braids, small — Medium R900, Large R1,100, XL R1,300, XXL R1,500",
-      "Box braids, small boho — Medium R1,100, Large R1,300, XL R1,500, XXL R1,700",
-      "Micro braids — Medium R1,100, Large R1,300, XL R1,500, XXL R1,700",
-      "Knotless braids, big — Medium R750, Large R900, XL R1,050, XXL R1,200",
-      "Knotless braids, big boho — Medium R850, Large R950, XL R1,100, XXL R1,300",
-      "Knotless braids, medium — Medium R900, Large R1,100, XL R1,300, XXL R1,500",
-      "Knotless braids, medium boho — Medium R1,100, Large R1,300, XL R1,500, XXL R1,700",
-      "Knotless braids, small — Medium R1,100, Large R1,300, XL R1,500, XXL R1,700",
-      "Knotless braids, small boho — Medium R1,300, Large R1,500, XL R1,700, XXL R1,900",
-      "Passion twist, big — Medium R750, Large R900, XL R1,100, XXL R1,300",
-      "Passion twist, medium — Medium R900, Large R1,100, XL R1,300, XXL R1,500",
-      "Passion twist, small — Medium R1,100, Large R1,300, XL R1,500, XXL R1,800",
-      "Passion twist, micro — Medium R1,300, Large R1,500, XL R1,700, XXL R2,000",
-      "Faux locs, big — Small R800, Medium R1,000, Large R1,200",
-    ],
-    imageUrl:
-      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=1200&q=85",
-  },
+ 
   {
     id: "a1",
     slug: "nails",
@@ -508,6 +494,22 @@ export const SERVICES_DATA: ServiceItem[] = [
     ],
     imageUrl:
       "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1200&q=85",
+  },
+   {
+    id: "h16",
+    slug: "pick-n-drop",
+    title: "Pick N Drop",
+    category: "braiding",
+    duration: "Price list",
+    price: "From R600",
+    description: "Pick N Drop styling with pricing based on braid size.",
+    benefits: [
+      "Medium R600",
+      "Small R750",
+      "Micro R900",
+    ],
+    imageUrl:
+      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=1200&q=85",
   },
 ];
 

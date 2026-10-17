@@ -4,6 +4,7 @@ import BrandNarrativeGallery from "@/components/sections/BrandNarrativeGallery";
 import LocalSchemaOverlay from "@/components/seo/LocalSchemaOverlay";
 import BookingMatrix from "@/components/sections/BookingMatrix";
 import GoogleReviews from "@/components/sections/GoogleReviews";
+import BrandMarquee from "@/components/sections/BrandMarquee";
 
 export default function HomePage() {
   return (
@@ -16,6 +17,8 @@ export default function HomePage() {
 
       {/* Programmatic Service Matrix and Dynamic Content Discovery Grid */}
       <ServiceDiscovery />
+
+      <BrandMarquee />
 
       {/* Luxury Brand Narrative and Editorial Gallery Portfolio Module */}
       <BrandNarrativeGallery />
