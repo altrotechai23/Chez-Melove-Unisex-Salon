@@ -259,17 +259,18 @@ export default function HeaderMatrix() {
             className="group flex items-center space-x-3 outline-none"
             aria-label="Chez Melove Unisex Salon home"
           >
-            <div className="flex items-center tracking-[0.25em] text-xl font-light text-neutral-900">
-              <span className="mr-2 font-medium">ME</span>
+            <div className="flex items-center text-xl font-light tracking-[0.25em] text-neutral-900">
+  <span className="mr-2 font-medium">CHEZ</span>
 
-              <span className="font-extralight text-neutral-400 transition-colors duration-300 group-hover:text-neutral-900">
-                LOVE
-              </span>
+  <span className="font-extralight text-neutral-400 transition-colors duration-300 group-hover:text-neutral-900">
+    ME LOVE
+  </span>
 
-              <span className="ml-4 border-l border-neutral-300 pl-4 text-[10px] font-medium uppercase tracking-[0.3em] text-neutral-400">
-                Unisex Salon
-              </span>
-            </div>
+  <span className="ml-4 border-l border-neutral-300 pl-4 text-[10px] font-medium uppercase tracking-[0.3em] text-neutral-400">
+    Unisex Salon
+  </span>
+</div>
+
           </Link>
 
           <nav

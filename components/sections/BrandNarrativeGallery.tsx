@@ -14,7 +14,7 @@ interface GalleryItem {
 const GALLERY_COLLECTION: GalleryItem[] = [
   {
     id: "g1",
-    url: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=85",
+    url: "images/chezmelove/in",
     alt: "Professional hair styling in a luxury salon",
     aspect: "aspect-[3/4]",
   },
