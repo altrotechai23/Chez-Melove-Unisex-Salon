@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Scissors, MapPin, Clock, Phone, Mail } from "lucide-react";
 import CurrentYear from "../CurrentYear";
+import Image from "next/image";
 
 export default function FooterMatrix() {
 

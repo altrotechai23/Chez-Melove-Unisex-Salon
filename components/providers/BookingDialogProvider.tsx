@@ -23,12 +23,12 @@ interface BookingForm {
 }
 
 const TREATMENT_SELECTION = [
-  { id: "h1", name: "Editorial Precision Cut & Style (R650 - R950)" },
-  { id: "h2", name: "Signature Balayage & Dimensional Tone (R1800 - R2600)" },
-  { id: "a1", name: "Advanced Micro-Needling Therapy (R1400)" },
-  { id: "a2", name: "Hydro-Infusion Pore Resurfacing (R850)" },
-  { id: "w1", name: "Aromatherapy Stress Release (R1100)" },
-  { id: "w2", name: "Detoxifying Scalp Spa & Blowout (R750)" },
+  { id: "h1", name: "Editorial Precision Cut & Style " },
+  { id: "h2", name: "Signature Balayage & Dimensional Tone" },
+  { id: "a1", name: "Advanced Micro-Needling Therapy" },
+  { id: "a2", name: "Hydro-Infusion Pore Resurfacing " },
+  { id: "w1", name: "Aromatherapy Stress Release " },
+  { id: "w2", name: "Detoxifying Scalp Spa & Blowout" },
 ];
 
 const TIME_SLOTS = [
