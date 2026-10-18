@@ -14,25 +14,25 @@ interface GalleryItem {
 const GALLERY_COLLECTION: GalleryItem[] = [
   {
     id: "g1",
-    url: "images/chezmelove/in",
+    url: "images/chezmelove/shop.jpeg",
     alt: "Professional hair styling in a luxury salon",
     aspect: "aspect-[3/4]",
   },
   {
     id: "g2",
-    url: "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=1000&q=85",
+    url: "images/chezmelove/men-haircut.jpeg",
     alt: "Contemporary salon interior and styling stations",
     aspect: "aspect-square",
   },
   {
     id: "g3",
-    url: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=85",
+    url: "images/chezmelove/men-asian-haircut.avif",
     alt: "Hair styling and beauty craftsmanship",
     aspect: "aspect-[4/5]",
   },
   {
     id: "g4",
-    url: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1000&q=85",
+    url: "images/chezmelove/stitch-braids-curly-ponytail.jpeg",
     alt: "Relaxing facial skincare treatment",
     aspect: "aspect-[3/4]",
   },
