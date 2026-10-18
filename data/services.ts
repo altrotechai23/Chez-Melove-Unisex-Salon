@@ -51,7 +51,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       "Faux locs, big — Small R800, Medium R1,000, Large R1,200",
     ],
     imageUrl:
-      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=1200&q=85",
+      "/images/chezmelove/single-braids.jpeg",
   },
   {
     id: "h1",
@@ -264,7 +264,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       "Singles braids — Long R500",
     ],
     imageUrl:
-      "/images/chezmelove/braids-twist.jpg",
+      "/images/chezmelove/short-jumbo-box-braids-bob.png",
   },
   {
     id: "h11",
