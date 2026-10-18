@@ -50,11 +50,11 @@ export default function FooterMatrix() {
           <ul className="text-xs font-light space-y-2" aria-label="Opening hours grid">
             <li className="flex justify-between border-b border-neutral-900 pb-1.5">
               <span>Monday &ndash; Friday</span>
-              <span className="text-white">09:00 &ndash; 19:00</span>
+              <span className="text-white">09:00 &ndash; 20:00</span>
             </li>
             <li className="flex justify-between border-b border-neutral-900 pb-1.5">
               <span>Saturday</span>
-              <span className="text-white">09:00 &ndash; 17:00</span>
+              <span className="text-white">09:00 &ndash; 19:00</span>
             </li>
             <li className="flex justify-between text-neutral-600">
               <span>Sunday</span>
