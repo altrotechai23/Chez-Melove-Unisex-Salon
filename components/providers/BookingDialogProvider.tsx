@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, {
@@ -11,6 +10,7 @@ import React, {
 } from "react";
 import { X } from "lucide-react";
 import gsap from "gsap";
+import { SERVICES_DATA } from "@/data/services";
 
 interface BookingForm {
   treatmentId: string;
@@ -21,15 +21,6 @@ interface BookingForm {
   clientPhone: string;
   specialNotes: string;
 }
-
-const TREATMENT_SELECTION = [
-  { id: "h1", name: "Editorial Precision Cut & Style " },
-  { id: "h2", name: "Signature Balayage & Dimensional Tone" },
-  { id: "a1", name: "Advanced Micro-Needling Therapy" },
-  { id: "a2", name: "Hydro-Infusion Pore Resurfacing " },
-  { id: "w1", name: "Aromatherapy Stress Release " },
-  { id: "w2", name: "Detoxifying Scalp Spa & Blowout" },
-];
 
 const TIME_SLOTS = [
   "09:00",
@@ -101,12 +92,16 @@ export default function BookingDialogProvider({
   const openBooking = (treatmentId?: string) => {
     timelineRef.current?.kill();
 
+    const matchingService = SERVICES_DATA.find(
+      (service) => service.id === treatmentId
+    );
+
     setFormData({
       ...INITIAL_FORM_DATA,
-      treatmentId: treatmentId || "",
+      treatmentId: matchingService?.id ?? "",
     });
 
-    setStep(treatmentId ? 2 : 1);
+    setStep(matchingService ? 2 : 1);
     setIsSubmitted(false);
     setValidationMessage("");
     setIsOpen(true);
@@ -282,8 +277,8 @@ export default function BookingDialogProvider({
     });
   };
 
-  const selectedTreatment = TREATMENT_SELECTION.find(
-    (treatment) => treatment.id === formData.treatmentId
+  const selectedTreatment = SERVICES_DATA.find(
+    (service) => service.id === formData.treatmentId
   );
 
   return (
@@ -303,8 +298,7 @@ export default function BookingDialogProvider({
             onClick={closeBooking}
             className="pointer-events-auto absolute inset-0 bg-neutral-950/60 backdrop-blur-md transition-opacity"
             aria-hidden="true"
-    
-    />
+          />
 
           {/* Premium Bottom Sheet Drawer */}
           <div
@@ -407,7 +401,8 @@ export default function BookingDialogProvider({
                     </strong>
                     . Your booking request is for{" "}
                     <strong className="font-normal text-neutral-800">
-                      {selectedTreatment?.name ?? "your selected service"}
+                      {selectedTreatment?.title ??
+                        "your selected service"}
                     </strong>{" "}
                     on {formData.date} at {formData.timeSlot}.
                   </p>
@@ -452,12 +447,12 @@ export default function BookingDialogProvider({
                           -- Choose a treatment --
                         </option>
 
-                        {TREATMENT_SELECTION.map((treatment) => (
+                        {SERVICES_DATA.map((treatment) => (
                           <option
                             key={treatment.id}
                             value={treatment.id}
                           >
-                            {treatment.name}
+                            {treatment.title} - {treatment.price}
                           </option>
                         ))}
                       </select>
@@ -632,7 +627,9 @@ export default function BookingDialogProvider({
                         disabled={isPending}
                         className="bg-neutral-950 px-6 py-4 text-[10px] font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
                       >
-                        {isPending ? "Transmitting..." : "Confirm Booking"}
+                        {isPending
+                          ? "Transmitting..."
+                          : "Confirm Booking"}
                       </button>
                     )}
                   </div>
