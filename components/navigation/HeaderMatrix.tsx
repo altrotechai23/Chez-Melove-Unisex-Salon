@@ -11,7 +11,8 @@ import {
   Sparkles,
   Image as ImageIcon,
   PhoneCall,
-  Calendar,
+  CalendarDays,
+  Check,
 } from "lucide-react";
 
 interface NavItem {
@@ -69,7 +70,6 @@ function getServerHashSnapshot() {
 
 /**
  * Tracks whether the component is being rendered on the client.
- * No effect or synchronous setState is needed.
  */
 function subscribeToNothing() {
   return () => {};
@@ -137,17 +137,14 @@ export default function HeaderMatrix() {
     return pathname === href;
   };
 
-  // Mobile navigation is rendered outside transformed page wrappers.
+  // Premium mobile navigation rendered outside transformed page wrappers.
   const mobileNavigation = (
     <nav
       className="
         fixed inset-x-0 bottom-0 z-[90]
-        border-t border-neutral-200/80
-        bg-white/95
-        pb-[env(safe-area-inset-bottom)]
-        shadow-[0_-4px_24px_rgba(0,0,0,0.04)]
-        backdrop-blur-2xl
         md:hidden
+        pb-[env(safe-area-inset-bottom)]
+        pointer-events-none
       "
       aria-label="Mobile navigation"
       style={{
@@ -159,77 +156,220 @@ export default function HeaderMatrix() {
         isolation: "isolate",
       }}
     >
-      <div className="flex h-16 items-center justify-around px-2 sm:px-4">
-        {NAVIGATION_ITEMS.map((item) => {
-          const Icon = item.icon;
-          const active = isActiveLink(item.href);
-
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              title={item.seoContext}
-              aria-current={active ? "page" : undefined}
-              className={`
-                relative flex h-full min-w-0 flex-1
-                flex-col items-center justify-center
-                transition-colors duration-300
-                ${
-                  active
-                    ? "text-neutral-950"
-                    : "text-neutral-400"
-                }
-              `}
-            >
-              <Icon
-                className="h-5 w-5 shrink-0 stroke-[1.5]"
-                aria-hidden="true"
-              />
-
-              <span className="mt-1 whitespace-nowrap font-sans text-[9px] font-semibold uppercase tracking-widest">
-                {item.label.split(" ")[0]}
-              </span>
-
-              {active && (
-                <span
-                  className="absolute top-1 h-1 w-1 rounded-full bg-neutral-950"
-                  aria-hidden="true"
-                />
-              )}
-            </Link>
-          );
-        })}
-
-        <button
-          type="button"
-          onClick={() => openBooking()}
+      <div
+        className="
+          pointer-events-auto
+          mx-2 mb-2
+          flex h-[68px] items-center
+          rounded-[22px]
+          border border-white/80
+          bg-white/90
+          px-2
+          shadow-[0_8px_35px_rgba(0,0,0,0.10),0_2px_8px_rgba(0,0,0,0.04)]
+          backdrop-blur-2xl
+          supports-[backdrop-filter]:bg-white/80
+          sm:mx-4 sm:px-3
+        "
+      >
+        {/* Chezmelove wordmark */}
+        <Link
+          href="/"
+          aria-label="Chezmelove Unisex Salon home"
           className="
-            flex h-full min-w-0 flex-1
-            cursor-pointer flex-col items-center justify-center
-            text-neutral-400 transition-colors duration-300
-            focus:outline-none
+            group flex h-full w-[66px] shrink-0
+            items-center justify-center
+            rounded-l-[18px]
+            outline-none
             focus-visible:ring-2
             focus-visible:ring-inset
-            focus-visible:ring-neutral-500
+            focus-visible:ring-[#c9a227]
+            sm:w-[78px]
           "
-          aria-label="Book a salon session"
         >
-          <div
-            className="
-              -translate-y-2 rounded-full
-              border border-white/10
-              bg-neutral-900 p-2.5 text-white
-              shadow-lg shadow-neutral-900/20
-              transition-transform duration-200
-              active:scale-95
-            "
-          >
-            <Calendar
-              className="h-4 w-4 stroke-[2]"
+          <span className="flex flex-col items-center justify-center leading-none">
+            <span
+              className="
+                font-serif text-[13px] font-medium
+                tracking-[0.12em] text-neutral-900
+                transition-colors duration-300
+                group-hover:text-[#a78218]
+                sm:text-[15px]
+              "
+            >
+              CHEZ
+            </span>
+
+            <span
+              className="
+                mt-[3px] font-sans text-[10px]
+                font-light tracking-[0.19em]
+                text-neutral-500
+                sm:text-[11px]
+              "
+            >
+              MELOVE
+            </span>
+
+            <span
+              className="
+                mt-[5px] h-[2px] w-5
+                rounded-full bg-[#c9a227]
+                transition-all duration-300
+                group-hover:w-8
+              "
               aria-hidden="true"
             />
-          </div>
-        </button>
+          </span>
+        </Link>
+
+        {/* Elegant vertical divider */}
+        <span
+          className="mx-1 h-9 w-px shrink-0 bg-neutral-200 sm:mx-2"
+          aria-hidden="true"
+        />
+
+        {/* Main navigation links */}
+        <div className="flex h-full min-w-0 flex-1 items-center justify-around">
+          {NAVIGATION_ITEMS.map((item) => {
+            const Icon = item.icon;
+            const active = isActiveLink(item.href);
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                title={item.seoContext}
+                aria-label={item.label}
+                aria-current={active ? "page" : undefined}
+                className={`
+                  group relative flex h-full min-w-0 flex-1
+                  flex-col items-center justify-center
+                  gap-[5px] rounded-xl
+                  outline-none
+                  transition-all duration-300 ease-out
+                  active:scale-95
+                  focus-visible:ring-2
+                  focus-visible:ring-inset
+                  focus-visible:ring-[#c9a227]
+                  ${
+                    active
+                      ? "text-neutral-950"
+                      : "text-neutral-400 hover:text-neutral-800"
+                  }
+                `}
+              >
+                {/* Active indicator */}
+                {active && (
+                  <span
+                    className="
+                      absolute top-[7px]
+                      h-[3px] w-5 rounded-full
+                      bg-[#c9a227]
+                    "
+                    aria-hidden="true"
+                  />
+                )}
+
+                <span
+                  className={`
+                    flex h-7 w-7 items-center justify-center
+                    rounded-xl
+                    transition-all duration-300 ease-out
+                    ${
+                      active
+                        ? "bg-[#c9a227]/10 text-neutral-950"
+                        : "bg-transparent group-hover:bg-neutral-100"
+                    }
+                  `}
+                >
+                  <Icon
+                    className={`
+                      h-[17px] w-[17px]
+                      stroke-[1.5]
+                      transition-transform duration-300
+                      ${
+                        active
+                          ? "scale-105"
+                          : "group-hover:-translate-y-0.5"
+                      }
+                    `}
+                    aria-hidden="true"
+                  />
+                </span>
+
+                <span
+                  className={`
+                    max-w-full truncate
+                    px-0.5 font-sans
+                    text-[7px] font-semibold
+                    uppercase tracking-[0.09em]
+                    sm:text-[8px] sm:tracking-[0.12em]
+                    ${
+                      active
+                        ? "text-neutral-900"
+                        : "text-neutral-400"
+                    }
+                  `}
+                >
+                  {item.label === "About Us" ? "About" : item.label}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Booking action — existing booking logic preserved */}
+        <div className="ml-1 flex h-full shrink-0 items-center sm:ml-2">
+          <button
+            type="button"
+            onClick={() => openBooking()}
+            aria-label="Book a salon session"
+            className="
+              group relative flex h-[46px] w-[46px]
+              cursor-pointer items-center justify-center
+              rounded-[15px]
+              border border-neutral-800
+              bg-neutral-950 text-white
+              shadow-[0_3px_10px_rgba(0,0,0,0.16)]
+              outline-none
+              transition-all duration-300 ease-out
+              hover:border-[#c9a227]
+              hover:bg-neutral-900
+              active:scale-90
+              focus-visible:ring-2
+              focus-visible:ring-[#c9a227]
+              focus-visible:ring-offset-2
+              focus-visible:ring-offset-white
+              sm:h-[48px] sm:w-[48px]
+            "
+          >
+            <CalendarDays
+              className="
+                h-[22px] w-[22px]
+                stroke-[1.6]
+                transition-transform duration-300
+                group-hover:scale-105
+              "
+              aria-hidden="true"
+            />
+
+            {/* Gold accent */}
+            <span
+              className="
+                absolute -right-1 -top-1
+                flex h-[17px] w-[17px]
+                items-center justify-center
+                rounded-full
+                border-2 border-white
+                bg-[#c9a227] text-neutral-950
+                shadow-sm
+              "
+              aria-hidden="true"
+            >
+              <Check className="h-[10px] w-[10px] stroke-[3]" />
+            </span>
+          </button>
+        </div>
       </div>
     </nav>
   );
@@ -253,28 +393,69 @@ export default function HeaderMatrix() {
           Chez Melove Unisex Salon — Desktop Navigation
         </h2>
 
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 md:px-12">
+        {/* Responsive desktop container */}
+        <div
+          className="
+            mx-auto flex w-full max-w-7xl
+            items-center justify-between gap-3
+            px-4 md:gap-3 md:px-5
+            lg:gap-6 lg:px-8
+            xl:gap-8 xl:px-12
+          "
+        >
+          {/* Logo */}
           <Link
             href="/"
-            className="group flex items-center space-x-3 outline-none"
+            className="group flex shrink-0 items-center outline-none"
             aria-label="Chez Melove Unisex Salon home"
           >
-            <div className="flex items-center text-xl font-light tracking-[0.25em] text-neutral-900">
-  <span className="mr-2 font-medium">CHEZ</span>
+            <div
+              className="
+                flex shrink-0 items-center whitespace-nowrap
+                text-sm font-light tracking-[0.12em]
+                text-neutral-900
+                lg:text-base lg:tracking-[0.18em]
+                xl:text-xl xl:tracking-[0.25em]
+              "
+            >
+              <span className="mr-1.5 font-medium lg:mr-2">
+                CHEZ
+              </span>
 
-  <span className="font-extralight text-neutral-400 transition-colors duration-300 group-hover:text-neutral-900">
-    ME LOVE
-  </span>
+              <span
+                className="
+                  font-extralight text-neutral-400
+                  transition-colors duration-300
+                  group-hover:text-neutral-900
+                "
+              >
+                ME LOVE
+              </span>
 
-  <span className="ml-4 border-l border-neutral-300 pl-4 text-[10px] font-medium uppercase tracking-[0.3em] text-neutral-400">
-    Unisex Salon
-  </span>
-</div>
-
+              <span
+                className="
+                  ml-2 border-l border-neutral-300
+                  pl-2 text-[8px] font-medium
+                  uppercase tracking-[0.15em]
+                  text-neutral-400
+                  lg:ml-3 lg:pl-3 lg:text-[9px]
+                  lg:tracking-[0.2em]
+                  xl:ml-4 xl:pl-4 xl:text-[10px]
+                  xl:tracking-[0.3em]
+                "
+              >
+                Unisex Salon
+              </span>
+            </div>
           </Link>
 
+          {/* Desktop links */}
           <nav
-            className="flex items-center space-x-10"
+            className="
+              flex min-w-0 flex-1
+              items-center justify-center
+              gap-3 lg:gap-5 xl:gap-10
+            "
             aria-label="Desktop navigation"
           >
             {NAVIGATION_ITEMS.map((item) => {
@@ -287,9 +468,12 @@ export default function HeaderMatrix() {
                   aria-current={active ? "page" : undefined}
                   title={item.seoContext}
                   className={`
-                    group relative py-2 text-xs font-medium
-                    uppercase tracking-[0.2em]
+                    group relative shrink-0 py-2
+                    text-[9px] font-medium
+                    uppercase tracking-[0.12em]
                     transition-colors duration-300
+                    lg:text-[10px] lg:tracking-[0.16em]
+                    xl:text-xs xl:tracking-[0.2em]
                     ${
                       active
                         ? "text-neutral-950"
@@ -316,19 +500,26 @@ export default function HeaderMatrix() {
             })}
           </nav>
 
-          <div>
+          {/* Booking button */}
+          <div className="shrink-0">
             <button
               type="button"
               onClick={() => openBooking()}
               className="
-                inline-flex cursor-pointer items-center justify-center
-                bg-neutral-900 px-6 py-2.5
-                text-xs font-medium uppercase tracking-[0.2em]
+                inline-flex shrink-0 cursor-pointer
+                items-center justify-center whitespace-nowrap
+                bg-neutral-900 px-3 py-2.5
+                text-[9px] font-medium
+                uppercase tracking-[0.12em]
                 text-white shadow-lg transition-all duration-300
                 hover:bg-neutral-800
                 focus:outline-none focus-visible:ring-2
                 focus-visible:ring-neutral-500
                 focus-visible:ring-offset-2
+                lg:px-4 lg:text-[10px]
+                lg:tracking-[0.16em]
+                xl:px-6 xl:text-xs
+                xl:tracking-[0.2em]
               "
             >
               Book Session
@@ -337,7 +528,7 @@ export default function HeaderMatrix() {
         </div>
       </header>
 
-      {/* Mobile Navigation: portal outside page transition wrappers */}
+      {/* Mobile navigation portal */}
       {isMounted
         ? createPortal(mobileNavigation, document.body)
         : null}
